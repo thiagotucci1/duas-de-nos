@@ -160,7 +160,7 @@
   const waLink = (msg) => `https://api.whatsapp.com/send/?phone=${PHONE}&text=${encodeURIComponent(msg)}&type=phone_number&app_absent=0`;
 
   const categories = [
-    { name: 'Colares', price: 'R$ 40', photo: 'assets/colares.jpg' },
+    { name: 'Colares', price: 'R$ 40', photo: 'assets/colares.jpg', link: 'colares.html' },
     { name: 'Pulseiras', price: 'R$ 25', photo: 'assets/pulseiras.jpg' },
     { name: 'Cordinha de óculos', price: 'R$ 25', photo: 'assets/cordinha-oculos.jpg' },
     { name: 'Cordinha de celular', price: 'R$ 20', photo: 'assets/cordinha-celular.jpg' },
@@ -182,7 +182,10 @@
   ];
 
   function cardHTML(cat, prefix) {
-    return `<div class="cat-card"><img src="${cat.photo}" alt="${cat.name}" loading="lazy"><div class="body"><h3>${cat.name}</h3><p>${prefix}${cat.price}</p></div></div>`;
+    const inner = `<img src="${cat.photo}" alt="${cat.name}" loading="lazy"><div class="body"><h3>${cat.name}</h3><p>${prefix}${cat.price}${cat.link ? ' <span style="white-space:nowrap;">· ver modelos →</span>' : ''}</p></div>`;
+    return cat.link
+      ? `<a class="cat-card" href="${cat.link}" style="color:inherit;">${inner}</a>`
+      : `<div class="cat-card">${inner}</div>`;
   }
 
   document.getElementById('grid-acessorios').innerHTML = categories.map(c => cardHTML(c, 'a partir de ')).join('');
